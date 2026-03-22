@@ -601,6 +601,35 @@ input[type=range]::-webkit-slider-thumb {
   flex-wrap: wrap;
 }
 
+/* Site nav */
+.site-nav {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 20px;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border2);
+}
+.site-nav-back {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--teal);
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.site-nav-back:hover { opacity: 0.7; }
+.site-nav-crumb {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  color: var(--text3);
+  text-transform: uppercase;
+}
+
 @media (max-width: 600px) {
   h1 { font-size: 28px; }
   .grid2, .use-grid, .quiz-opts { grid-template-columns: 1fr; }
@@ -609,6 +638,10 @@ input[type=range]::-webkit-slider-thumb {
 </style>
 </head>
 <body>
+<div class="site-nav">
+  <a href="/" class="site-nav-back">← MJOLNIR ARMORY</a>
+  <span class="site-nav-crumb">// TRAINING MODULE 04</span>
+</div>
 <div class="app">
 
   <header>
