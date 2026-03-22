@@ -604,7 +604,7 @@ input[type=range]::-webkit-slider-thumb {
 @media (max-width: 600px) {
   h1 { font-size: 28px; }
   .grid2, .use-grid, .quiz-opts { grid-template-columns: 1fr; }
-  nav button { font-size: 10px; padding: 6px 10px; }
+  nav button { font-size: 10px; padding: 6px 8px; }
 }
 </style>
 </head>
@@ -634,6 +634,10 @@ input[type=range]::-webkit-slider-thumb {
     <button onclick="showSection('builder')">05 · Build signal</button>
     <button onclick="showSection('history')">06 · History</button>
     <button onclick="showSection('quiz')">07 · Quiz</button>
+    <button onclick="showSection('antenna')">08 · Antenna</button>
+    <button onclick="showSection('propagation')">09 · Propagation</button>
+    <button onclick="showSection('encoding')">10 · Encoding</button>
+    <button onclick="showSection('noise')">11 · Noise</button>
   </nav>
 
   <!-- SECTION 1: SPECTRUM -->
@@ -801,16 +805,179 @@ input[type=range]::-webkit-slider-thumb {
     <div class="sec-header">
       <div class="sec-tag">Briefing 07 // Field Assessment</div>
       <h2>Knowledge Check</h2>
-      <p class="sec-sub">Ten questions across all modules. Your performance will be logged.</p>
+      <p class="sec-sub">Twenty-two questions across all modules. Your performance will be logged.</p>
     </div>
     <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%;"></div></div>
     <div id="quizContent"></div>
   </div>
 
+  <!-- SECTION 8: ANTENNA THEORY -->
+  <div id="antenna" class="section">
+    <div class="sec-header">
+      <div class="sec-tag">Briefing 08 // Antenna Systems</div>
+      <h2>Antenna Theory</h2>
+      <p class="sec-sub">Your radio is only as good as its antenna. UNSC engineers size every antenna to the frequency it broadcasts on — too long or too short and signal strength collapses.</p>
+    </div>
+    <div class="grid2">
+      <div class="card" style="margin-bottom:0;">
+        <div class="card-label">// Core Concept</div>
+        <div class="card-title">The Quarter-Wave Rule</div>
+        <div class="card-body">An antenna works best when its length equals exactly <strong>one quarter of the signal's wavelength</strong>. This lets it resonate with the wave — like a tuning fork vibrating at the right pitch.</div>
+      </div>
+      <div class="card orange" style="margin-bottom:0;">
+        <div class="card-label">// Field Comparison</div>
+        <div class="card-title">Directional vs Omnidirectional</div>
+        <div class="card-body"><strong>Omnidirectional</strong> antennas (like Wi-Fi routers) broadcast in all directions equally. <strong>Directional</strong> antennas (like satellite dishes) focus power into one beam for longer range.</div>
+      </div>
+    </div>
+    <div class="formula-box" style="margin-top:14px;">
+      <div class="formula">Length = <em>c</em> ÷ f ÷ 4</div>
+      <div class="formula-note">Antenna length (m) = Speed of Light ÷ Frequency (Hz) ÷ 4</div>
+    </div>
+    <div class="ctrl-row">
+      <span class="ctrl-label">Band</span>
+      <select id="antSelect" onchange="updateAntenna(this.value)" style="flex:1;background:var(--panel2);border:1px solid var(--border);color:var(--text);font-family:var(--font-mono);font-size:12px;padding:6px 10px;border-radius:2px;outline:none;cursor:pointer;">
+        <option value="0">AM Radio — 1 MHz</option>
+        <option value="1">Shortwave — 10 MHz</option>
+        <option value="2">FM Radio — 100 MHz</option>
+        <option value="3">TV Broadcast — 300 MHz</option>
+        <option value="4">Cell Phone — 1 GHz</option>
+        <option value="5">Wi-Fi 2.4 GHz</option>
+        <option value="6">Wi-Fi 5 GHz</option>
+      </select>
+    </div>
+    <div class="display-panel" style="display:flex;align-items:center;gap:20px;">
+      <svg viewBox="0 0 20 120" width="20" height="120" style="flex-shrink:0;">
+        <rect id="ant-rod" x="9" y="0" width="2" rx="1" fill="#00d4c8" opacity="0.85"/>
+        <rect x="0" y="118" width="20" height="2" rx="1" fill="#00d4c8" opacity="0.4"/>
+      </svg>
+      <div>
+        <div class="dp-name" id="ant-length">75.0 m</div>
+        <div class="dp-detail" id="ant-band">AM Radio · 1 MHz · quarter-wave antenna length</div>
+      </div>
+    </div>
+    <div class="card green" style="margin-top:12px;">
+      <div class="card-label">// Field Intel</div>
+      <div class="card-body">This is why AM radio towers are massive steel structures and your Wi-Fi router has a tiny stub. <strong>Higher frequency = shorter wavelength = smaller antenna.</strong></div>
+    </div>
+  </div>
+
+  <!-- SECTION 9: SIGNAL PROPAGATION -->
+  <div id="propagation" class="section">
+    <div class="sec-header">
+      <div class="sec-tag">Briefing 09 // Signal Propagation</div>
+      <h2>Signal Propagation</h2>
+      <p class="sec-sub">Your signal has to travel through the real world to reach its destination. Terrain, obstacles, and atmosphere all determine what gets through.</p>
+    </div>
+    <div class="grid3">
+      <div class="card" style="margin-bottom:0;">
+        <div class="card-label">// Type 1</div>
+        <div class="card-title">Line of Sight</div>
+        <div class="card-body" style="font-size:12px;">Signal travels in a straight line. Works great in the open. Any obstacle between transmitter and receiver blocks the signal.</div>
+      </div>
+      <div class="card blue" style="margin-bottom:0;">
+        <div class="card-label">// Type 2</div>
+        <div class="card-title">Sky-Wave Bounce</div>
+        <div class="card-body" style="font-size:12px;">Low-frequency signals bounce off the ionosphere — the upper atmosphere — and curve back to Earth, reaching far beyond the horizon.</div>
+      </div>
+      <div class="card orange" style="margin-bottom:0;">
+        <div class="card-label">// Type 3</div>
+        <div class="card-title">Ground Wave</div>
+        <div class="card-body" style="font-size:12px;">Very low frequency signals follow the curve of the Earth's surface. Used by submarines and military systems to communicate underground.</div>
+      </div>
+    </div>
+    <p style="font-family:var(--font-mono);font-size:11px;color:var(--text2);letter-spacing:1px;margin:16px 0 8px;text-transform:uppercase;">Select terrain type:</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;" id="terrainBtns">
+      <button class="mod-btn active" onclick="selectTerrain(0)">Open Field</button>
+      <button class="mod-btn" onclick="selectTerrain(1)">Urban</button>
+      <button class="mod-btn" onclick="selectTerrain(2)">Underground</button>
+      <button class="mod-btn" onclick="selectTerrain(3)">Mountain</button>
+    </div>
+    <div class="display-panel">
+      <div class="dp-name" id="terr-type">Line-of-Sight</div>
+      <div class="dp-detail" id="terr-range">Estimated range: ~50 km · Best for: VHF/UHF (FM, cellular)</div>
+      <div style="font-family:var(--font-mono);font-size:11px;color:var(--text2);margin-top:8px;line-height:1.7;" id="terr-note">Clear path, maximum efficiency. Standard UNSC field comms.</div>
+    </div>
+  </div>
+
+  <!-- SECTION 10: SIGNAL ENCODING -->
+  <div id="encoding" class="section">
+    <div class="sec-header">
+      <div class="sec-tag">Briefing 10 // Signal Encoding</div>
+      <h2>Signal Encoding</h2>
+      <p class="sec-sub">Every word you transmit must be converted into a pattern of signal changes. Understanding encoding is the key to reliable digital communication.</p>
+    </div>
+    <div class="grid2">
+      <div class="card" style="margin-bottom:0;">
+        <div class="card-label">// Concept</div>
+        <div class="card-title">Bits & Baud</div>
+        <div class="card-body">A <strong>bit</strong> is a single 1 or 0. <strong>Baud rate</strong> is how many signal changes happen per second. At 9600 baud, the transmitter switches 9,600 times every second — fast enough to carry text instantly.</div>
+      </div>
+      <div class="card blue" style="margin-bottom:0;">
+        <div class="card-label">// Comparison</div>
+        <div class="card-title">Digital vs Analog</div>
+        <div class="card-body"><strong>Analog</strong> signals carry voice as a continuous wave — noise adds up over distance. <strong>Digital</strong> signals only use two states (on/off), so errors are easy to detect and correct.</div>
+      </div>
+    </div>
+    <div style="margin-top:14px;display:flex;gap:8px;align-items:center;">
+      <input type="text" id="enc-input" maxlength="8" placeholder="Type a letter or word..." style="flex:1;background:var(--panel2);border:1px solid var(--border);color:var(--text);font-family:var(--font-mono);font-size:13px;padding:8px 12px;border-radius:2px;outline:none;" oninput="encodeMessage()">
+    </div>
+    <div class="display-panel" style="margin-top:10px;">
+      <div class="dp-name" id="enc-char" style="font-size:16px;letter-spacing:3px;word-break:break-all;">// ENTER A CHARACTER ABOVE</div>
+      <svg id="enc-wave" viewBox="0 0 200 40" width="100%" height="40" style="margin:10px 0 4px;display:block;"></svg>
+      <div class="dp-detail" id="enc-baud"></div>
+    </div>
+    <div class="card green" style="margin-top:12px;">
+      <div class="card-label">// Field Intel</div>
+      <div class="card-body">ASCII is a standard that assigns each letter, number, and symbol a number from 0–127. The letter <strong>'A'</strong> = 65 = 01000001 in binary. Every character you type is secretly a number.</div>
+    </div>
+  </div>
+
+  <!-- SECTION 11: NOISE & INTERFERENCE -->
+  <div id="noise" class="section">
+    <div class="sec-header">
+      <div class="sec-tag">Briefing 11 // Noise &amp; Interference</div>
+      <h2>Noise &amp; Interference</h2>
+      <p class="sec-sub">All signals face interference. Know your signal-to-noise ratio — or your transmission is lost in the static.</p>
+    </div>
+    <div class="grid2">
+      <div class="card" style="margin-bottom:0;">
+        <div class="card-label">// Key Concept</div>
+        <div class="card-title">Signal-to-Noise Ratio</div>
+        <div class="card-body"><strong>SNR</strong> compares how strong your signal is versus how much background noise exists. A high SNR means a clear transmission. Low SNR means the signal is buried in static.</div>
+      </div>
+      <div class="card orange" style="margin-bottom:0;">
+        <div class="card-label">// Interference Sources</div>
+        <div class="card-title">What Creates Noise?</div>
+        <div class="card-body">Other transmitters on nearby frequencies, electrical equipment, atmospheric static, and even cosmic background radiation all add noise to your signal.</div>
+      </div>
+    </div>
+    <div class="formula-box">
+      <div class="formula">SNR = 10 × log<sub style="font-size:0.6em;">10</sub>(<em>S</em> ÷ <em>N</em>)</div>
+      <div class="formula-note">Measured in decibels (dB) · Above 20 dB = clear · 10–20 dB = degraded · Below 10 dB = lost</div>
+    </div>
+    <div class="ctrl-row">
+      <span class="ctrl-label">Distance</span>
+      <input type="range" min="0" max="100" value="0" id="snrSlider" oninput="updateSNR(this.value)" step="1">
+      <span class="ctrl-val" id="snr-dist">0 km</span>
+    </div>
+    <div class="display-panel">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <span style="font-family:var(--font-mono);font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:1px;">Signal Strength</span>
+        <span class="dp-name" style="font-size:18px;" id="snr-sig">20.0 dB</span>
+      </div>
+      <div style="height:6px;background:var(--panel2);border-radius:3px;margin-bottom:12px;overflow:hidden;">
+        <div id="snr-bar" style="height:100%;width:100%;background:#69f0ae;border-radius:3px;transition:width 0.3s,background 0.3s;"></div>
+      </div>
+      <svg id="snr-wave" class="wave-svg" viewBox="0 0 300 48" preserveAspectRatio="none"></svg>
+      <div class="dp-name" id="snr-label" style="margin-top:8px;font-size:18px;color:#69f0ae;">SNR: 25.4 dB // COMMS CLEAR</div>
+    </div>
+  </div>
+
 </div>
 
 <script>
-const allSections = ['spectrum','howwork','explorer','wavelength','builder','history','quiz'];
+const allSections = ['spectrum','howwork','explorer','wavelength','builder','history','quiz','antenna','propagation','encoding','noise'];
 function showSection(id) {
   allSections.forEach(s => { document.getElementById(s).classList.toggle('active', s === id); });
   document.querySelectorAll('nav button').forEach((b, i) => { b.classList.toggle('active', allSections[i] === id); });
@@ -818,6 +985,8 @@ function showSection(id) {
   if (id === 'wavelength') updateMath(10);
   if (id === 'builder') renderUseCases();
   if (id === 'explorer') { drawWave('waveViz', 1.5, 18, '#00d4c8'); }
+  if (id === 'antenna') updateAntenna(0);
+  if (id === 'noise') updateSNR(0);
 }
 
 // Explorer
@@ -941,6 +1110,22 @@ const questions = [
   {q:'What does AM stand for?', opts:['Automatic Modulation','Amplitude Modulation','Aerial Messaging','Antenna Mode'], ans:1, exp:'AM = Amplitude Modulation. The wave\'s height (amplitude) is varied to encode the audio signal.'},
   {q:'Why are AM towers much taller than Wi-Fi antennas?', opts:['AM uses more power','AM wavelengths are hundreds of meters long','AM towers are decorative','AM signals travel underground'], ans:1, exp:'Antenna size scales with wavelength. AM at ~1 MHz has λ ≈ 300m. Wi-Fi at 2.4 GHz has λ ≈ 12cm.'},
   {q:'What technology uses radio waves to detect precipitation and storms?', opts:['Sonar','Radar','Lidar','Infrared'], ans:1, exp:'Radar (Radio Detection And Ranging) sends waves that bounce off water droplets and return to reveal storm locations.'},
+  // Section 08 — Antenna Theory
+  {q:'What is the quarter-wave rule for antenna sizing?', opts:['Antenna length = wavelength','Antenna length = wavelength ÷ 2','Antenna length = wavelength ÷ 4','Antenna length = wavelength × 4'], ans:2, exp:'Quarter-wave (λ/4) antennas resonate most efficiently — their length matches the wave\'s rhythm so they absorb and radiate power with maximum efficiency.'},
+  {q:'A Wi-Fi router at 2.4 GHz has a quarter-wave antenna approximately...', opts:['30 cm','3 cm','3 m','30 m'], ans:1, exp:'λ = 300,000,000 ÷ 2,400,000,000 ≈ 0.125 m. Quarter-wave = 0.125 ÷ 4 ≈ 3.1 cm. That tiny stub is perfectly sized for 2.4 GHz.'},
+  {q:'How does a directional antenna differ from an omnidirectional one?', opts:['It uses more power','It focuses its signal in one direction for greater range','It transmits at a higher frequency','It is physically smaller'], ans:1, exp:'Directional antennas concentrate power into a narrow beam — like a flashlight versus a lightbulb. This increases effective range in one direction at the cost of coverage area.'},
+  // Section 09 — Signal Propagation
+  {q:'Which propagation type bounces off the ionosphere to travel beyond the horizon?', opts:['Line-of-sight','Sky-wave','Ground-wave','Microwave relay'], ans:1, exp:'Sky-wave propagation uses the ionosphere — an electrically charged layer of the upper atmosphere — as a mirror, allowing signals to reach thousands of kilometers.'},
+  {q:'Why can very low frequency (VLF) signals penetrate underground?', opts:['They use more power','Their very long wavelengths pass through solid materials','They travel faster than other waves','They use a different modulation type'], ans:1, exp:'Long wavelengths (hundreds of kilometers for VLF) interact differently with matter and can penetrate earth and seawater — which is why they\'re used to communicate with submerged submarines.'},
+  {q:'What most limits line-of-sight radio transmission?', opts:['The speed of light','Physical obstacles between transmitter and receiver','The time of day','Battery power of the transmitter'], ans:1, exp:'Line-of-sight requires a clear, unobstructed path. Buildings, hills, and terrain directly block these signals — which is why cell towers are placed on high ground.'},
+  // Section 10 — Signal Encoding
+  {q:'What does "baud rate" measure?', opts:['Signal power in watts','The number of signal changes per second','The frequency in MHz','The wavelength in meters'], ans:1, exp:'Baud rate counts how many times per second a signal switches state. At 9600 baud, 9,600 signal changes carry data every second.'},
+  {q:'Why are digital signals more reliable over long distances than analog?', opts:['They travel faster','They only use two states — making errors detectable and correctable','They use more power','They have a longer wavelength'], ans:1, exp:'Digital signals are either ON or OFF. Even with noise added, the receiver can still determine which state was intended. Analog signals accumulate noise with no way to separate it from the original.'},
+  {q:'What does ASCII do?', opts:['Measures signal frequency in hertz','Converts letters and symbols into binary numbers','Encodes radio waves for transmission','Amplifies weak signals'], ans:1, exp:'ASCII (American Standard Code for Information Interchange) assigns every letter, digit, and symbol a number from 0–127, which is then represented as binary bits for transmission.'},
+  // Section 11 — Noise & Interference
+  {q:'What does SNR stand for?', opts:['Signal Node Relay','Signal-to-Noise Ratio','System Network Rate','Spectrum Noise Reduction'], ans:1, exp:'Signal-to-Noise Ratio measures how much stronger your signal is compared to background noise. High SNR = clear comms. Low SNR = signal buried in static.'},
+  {q:'As distance from a transmitter increases, SNR generally...', opts:['Increases','Stays the same','Decreases','Doubles'], ans:2, exp:'Signal strength drops with distance (inverse square law) while background noise stays roughly constant — so SNR decreases as distance increases.'},
+  {q:'At very low SNR, a radio transmission will...', opts:['Automatically boost its power','Become unreadable or fail entirely','Switch to a higher frequency','Require no antenna'], ans:1, exp:'Below about 10 dB SNR, noise overwhelms the signal and the receiver can\'t distinguish the original message. This is why signal boosters and repeaters are used in long-range systems.'},
 ];
 
 let qi = 0, score = 0, answered = false;
@@ -994,6 +1179,118 @@ function showScore() {
 }
 
 function restartQuiz() { qi = 0; score = 0; answered = false; renderQuiz(); }
+
+// Section 08 — Antenna Theory
+const antBands = [
+  { name: 'AM Radio',       freqHz: 1e6,   label: '1 MHz' },
+  { name: 'Shortwave',      freqHz: 10e6,  label: '10 MHz' },
+  { name: 'FM Radio',       freqHz: 100e6, label: '100 MHz' },
+  { name: 'TV Broadcast',   freqHz: 300e6, label: '300 MHz' },
+  { name: 'Cell Phone',     freqHz: 1e9,   label: '1 GHz' },
+  { name: 'Wi-Fi 2.4 GHz',  freqHz: 2.4e9, label: '2.4 GHz' },
+  { name: 'Wi-Fi 5 GHz',    freqHz: 5e9,   label: '5 GHz' },
+];
+function updateAntenna(v) {
+  const b = antBands[parseInt(v)];
+  const lengthM = 3e8 / b.freqHz / 4;
+  let display;
+  if (lengthM >= 1) display = lengthM.toFixed(1) + ' m';
+  else display = (lengthM * 100).toFixed(1) + ' cm';
+  document.getElementById('ant-length').textContent = display;
+  document.getElementById('ant-band').textContent = b.name + ' · ' + b.label + ' · quarter-wave antenna length';
+  // Logarithmic scale: AM=75m → 120px tall, Wi-Fi 5GHz=1.5cm → 3px tall
+  const logMin = Math.log(0.015), logMax = Math.log(75);
+  const logLen = Math.log(Math.max(0.015, lengthM));
+  const svgH = Math.round(3 + (logLen - logMin) / (logMax - logMin) * 117);
+  const rod = document.getElementById('ant-rod');
+  rod.setAttribute('height', svgH);
+  rod.setAttribute('y', 120 - svgH);
+}
+
+// Section 09 — Signal Propagation
+const terrains = [
+  { type: 'Line-of-Sight', range: '~50 km', best: 'VHF/UHF (FM, cellular)', note: 'Clear path, maximum efficiency. Standard UNSC field comms.' },
+  { type: 'Multipath / Reflection', range: '~5 km', best: 'UHF (cellular, Wi-Fi)', note: 'Signals bounce off buildings. Shorter effective range — use higher-gain antennas to compensate.' },
+  { type: 'Ground-Wave / Guided', range: '~1 km', best: 'ELF/VLF (very low freq.)', note: 'Only extremely low frequencies penetrate soil and rock. Used for submarine communications worldwide.' },
+  { type: 'Diffraction / Sky-Wave', range: '~500 km', best: 'HF shortwave (3–30 MHz)', note: 'Use sky-wave bounce off the ionosphere to reach beyond the horizon. Long-range UNSC comms.' },
+];
+function selectTerrain(i) {
+  document.querySelectorAll('#terrainBtns .mod-btn').forEach((b, j) => b.classList.toggle('active', j === i));
+  const t = terrains[i];
+  document.getElementById('terr-type').textContent = t.type;
+  document.getElementById('terr-range').textContent = 'Estimated range: ' + t.range + ' · Best for: ' + t.best;
+  document.getElementById('terr-note').textContent = t.note;
+}
+
+// Section 10 — Signal Encoding
+function encodeMessage() {
+  const msg = document.getElementById('enc-input').value;
+  if (!msg) {
+    document.getElementById('enc-char').textContent = '// ENTER A CHARACTER ABOVE';
+    document.getElementById('enc-wave').innerHTML = '';
+    document.getElementById('enc-baud').textContent = '';
+    return;
+  }
+  const ch = msg[0];
+  const code = ch.charCodeAt(0);
+  const bits = code.toString(2).padStart(8, '0');
+  document.getElementById('enc-char').textContent = "'" + ch + "' = " + code + " = " + bits;
+  drawBitWave('enc-wave', bits);
+  const ms = (8 / 9600 * 1000).toFixed(2);
+  document.getElementById('enc-baud').textContent = 'At 9600 baud: ' + ms + ' ms to transmit this character';
+}
+function drawBitWave(svgId, bits) {
+  const svg = document.getElementById(svgId);
+  if (!svg) return;
+  const bw = 200 / 8;
+  let path = '';
+  bits.split('').forEach((b, i) => {
+    const x = i * bw;
+    const y = b === '1' ? 6 : 34;
+    const nx = (i + 1) * bw;
+    if (path === '') path += 'M' + x + ',' + y;
+    else path += ' L' + x + ',' + y;
+    path += ' L' + nx + ',' + y;
+    if (i < 7 && bits[i + 1] !== b) path += ' L' + nx + ',' + (bits[i + 1] === '1' ? 6 : 34);
+  });
+  svg.innerHTML = '<path d="' + path + '" stroke="#00d4c8" stroke-width="2" fill="none"/>';
+}
+
+// Section 11 — Noise & Interference
+function updateSNR(v) {
+  v = parseInt(v);
+  document.getElementById('snr-dist').textContent = v + ' km';
+  // Signal power drops with inverse square (simplified: 100 at 0 km, ~1 at 100 km)
+  const signal = Math.max(1, 100 / (1 + (v / 10) * (v / 10)));
+  const noise = 5;
+  const snr = 10 * Math.log10(signal / noise);
+  const sigDb = (10 * Math.log10(signal)).toFixed(1);
+  document.getElementById('snr-sig').textContent = sigDb + ' dB';
+  const barPct = Math.max(2, Math.round(signal));
+  const bar = document.getElementById('snr-bar');
+  bar.style.width = barPct + '%';
+  const label = document.getElementById('snr-label');
+  let color, status;
+  if (snr > 20) { color = '#69f0ae'; status = 'COMMS CLEAR'; }
+  else if (snr > 10) { color = '#ff6b35'; status = 'SIGNAL DEGRADED'; }
+  else { color = '#ff3333'; status = 'COMMS LOST'; }
+  bar.style.background = color;
+  label.style.color = color;
+  label.textContent = 'SNR: ' + snr.toFixed(1) + ' dB // ' + status;
+  const amp = Math.max(2, 18 * (signal / 100));
+  drawWave('snr-wave', 3, amp, color);
+  // Overlay noise spikes that intensify as SNR drops
+  if (snr < 20) {
+    const svg = document.getElementById('snr-wave');
+    const noiseLevel = Math.min(0.85, (20 - snr) / 20);
+    let noisePath = '';
+    for (let x = 0; x < 300; x += 5) {
+      const ny = 24 + (Math.random() - 0.5) * 40 * noiseLevel;
+      noisePath += (noisePath === '' ? 'M' : ' L') + x + ',' + ny.toFixed(1);
+    }
+    svg.innerHTML += '<path d="' + noisePath + '" stroke="rgba(255,80,80,0.3)" stroke-width="1" fill="none"/>';
+  }
+}
 </script>
 </body>
 </html>
