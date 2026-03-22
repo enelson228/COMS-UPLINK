@@ -666,11 +666,11 @@ input[type=range]::-webkit-slider-thumb {
     <button onclick="showSection('wavelength')">04 · Wave math</button>
     <button onclick="showSection('builder')">05 · Build signal</button>
     <button onclick="showSection('history')">06 · History</button>
-    <button onclick="showSection('quiz')">07 · Quiz</button>
-    <button onclick="showSection('antenna')">08 · Antenna</button>
-    <button onclick="showSection('propagation')">09 · Propagation</button>
-    <button onclick="showSection('encoding')">10 · Encoding</button>
-    <button onclick="showSection('noise')">11 · Noise</button>
+    <button onclick="showSection('antenna')">07 · Antenna</button>
+    <button onclick="showSection('propagation')">08 · Propagation</button>
+    <button onclick="showSection('encoding')">09 · Encoding</button>
+    <button onclick="showSection('noise')">10 · Noise</button>
+    <button onclick="showSection('quiz')">11 · Quiz</button>
   </nav>
 
   <!-- SECTION 1: SPECTRUM -->
@@ -836,7 +836,7 @@ input[type=range]::-webkit-slider-thumb {
   <!-- SECTION 7: QUIZ -->
   <div id="quiz" class="section">
     <div class="sec-header">
-      <div class="sec-tag">Briefing 07 // Field Assessment</div>
+      <div class="sec-tag">Briefing 11 // Field Assessment</div>
       <h2>Knowledge Check</h2>
       <p class="sec-sub">Twenty-two questions across all modules. Your performance will be logged.</p>
     </div>
@@ -847,7 +847,7 @@ input[type=range]::-webkit-slider-thumb {
   <!-- SECTION 8: ANTENNA THEORY -->
   <div id="antenna" class="section">
     <div class="sec-header">
-      <div class="sec-tag">Briefing 08 // Antenna Systems</div>
+      <div class="sec-tag">Briefing 07 // Antenna Systems</div>
       <h2>Antenna Theory</h2>
       <p class="sec-sub">Your radio is only as good as its antenna. UNSC engineers size every antenna to the frequency it broadcasts on — too long or too short and signal strength collapses.</p>
     </div>
@@ -898,7 +898,7 @@ input[type=range]::-webkit-slider-thumb {
   <!-- SECTION 9: SIGNAL PROPAGATION -->
   <div id="propagation" class="section">
     <div class="sec-header">
-      <div class="sec-tag">Briefing 09 // Signal Propagation</div>
+      <div class="sec-tag">Briefing 08 // Signal Propagation</div>
       <h2>Signal Propagation</h2>
       <p class="sec-sub">Your signal has to travel through the real world to reach its destination. Terrain, obstacles, and atmosphere all determine what gets through.</p>
     </div>
@@ -936,7 +936,7 @@ input[type=range]::-webkit-slider-thumb {
   <!-- SECTION 10: SIGNAL ENCODING -->
   <div id="encoding" class="section">
     <div class="sec-header">
-      <div class="sec-tag">Briefing 10 // Signal Encoding</div>
+      <div class="sec-tag">Briefing 09 // Signal Encoding</div>
       <h2>Signal Encoding</h2>
       <p class="sec-sub">Every word you transmit must be converted into a pattern of signal changes. Understanding encoding is the key to reliable digital communication.</p>
     </div>
@@ -969,7 +969,7 @@ input[type=range]::-webkit-slider-thumb {
   <!-- SECTION 11: NOISE & INTERFERENCE -->
   <div id="noise" class="section">
     <div class="sec-header">
-      <div class="sec-tag">Briefing 11 // Noise &amp; Interference</div>
+      <div class="sec-tag">Briefing 10 // Noise &amp; Interference</div>
       <h2>Noise &amp; Interference</h2>
       <p class="sec-sub">All signals face interference. Know your signal-to-noise ratio — or your transmission is lost in the static.</p>
     </div>
@@ -1010,7 +1010,7 @@ input[type=range]::-webkit-slider-thumb {
 </div>
 
 <script>
-const allSections = ['spectrum','howwork','explorer','wavelength','builder','history','quiz','antenna','propagation','encoding','noise'];
+const allSections = ['spectrum','howwork','explorer','wavelength','builder','history','antenna','propagation','encoding','noise','quiz'];
 function showSection(id) {
   allSections.forEach(s => { document.getElementById(s).classList.toggle('active', s === id); });
   document.querySelectorAll('nav button').forEach((b, i) => { b.classList.toggle('active', allSections[i] === id); });
